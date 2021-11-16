@@ -35,3 +35,15 @@ const second = document.querySelector('#second');
 hour.textContent = now.getHours();
 minute.textContent = now.getMinutes();
 second.textContent = now.getSeconds();
+
+// TODO: Double-check instructions for this step.
+// Time interval: Gets hours, minutes and seconds with one second between each call. 
+setInterval(()=> {
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+}, 1000);
+
+console.log("Timer started");
+
+
