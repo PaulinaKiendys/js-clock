@@ -20,7 +20,18 @@
  * använd clearInterval(variabelNamn);
  * */
 
+// Gets time
 const now = new Date(); // gets current timestamp when this line was executed
 console.log("Hour:", now.getHours());
 console.log("Minute:", now.getMinutes());
 console.log("Second:", now.getSeconds());
+
+// Targets span elements
+const hour = document.querySelector('#hour');
+const minute = document.querySelector('#minute');
+const second = document.querySelector('#second');
+
+// Updates span elements with time
+hour.textContent = now.getHours();
+minute.textContent = now.getMinutes();
+second.textContent = now.getSeconds();
