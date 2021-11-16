@@ -27,23 +27,70 @@ console.log("Minute:", now.getMinutes());
 console.log("Second:", now.getSeconds());
 
 // Targets span elements
-const hour = document.querySelector('#hour');
-const minute = document.querySelector('#minute');
-const second = document.querySelector('#second');
+const hourEl = document.querySelector('#hour');
+const minuteEl = document.querySelector('#minute');
+const secondEl = document.querySelector('#second');
 
 // Updates span elements with time
-hour.textContent = now.getHours();
-minute.textContent = now.getMinutes();
-second.textContent = now.getSeconds();
+hourEl.textContent = now.getHours();
+minuteEl.textContent = now.getMinutes();
+secondEl.textContent = now.getSeconds();
 
-// TODO: Double-check instructions for this step.
-// Time interval: Gets hours, minutes and seconds with one second between each call. 
+// zeropad function that puts 0 in front of num if it's less than 10
+const zeropad = num => {
+    if (num < 10) {
+        return '0' + num;
+    } else {
+        return num;
+    }
+}
+
+// Time function
+const updateTime = () => {
+
+    // Gets current time
+    const currentTime = new Date();
+
+    let hour = currentTime.getHours();
+    // if hour is less than 10
+    if (hour < 10) {
+        // adds 0 before hour
+        hour = '0' + hour;
+    }
+
+    let minute = currentTime.getMinutes();
+    // if minute is less than 10
+    if (minute < 10) {
+        // adds 0 before minute
+        minute = '0' + minute
+    }
+
+    let second = currentTime.getSeconds();
+    // if second is less than 10
+    if (second < 10) {
+        // adds 0 before second
+        second = '0' + second
+    }
+
+    // Updates clock in DOM
+    hourEl.textContent = currentTime.getHours();
+    minuteEl.textContent = currentTime.getMinutes();
+    secondEl.textContent = currentTime.getSeconds();
+
+    // Updates clock in DOM with zeropad
+    hourEl.textContent = zeropad(currentTime.getHours());
+    minuteEl.textContent = zeropad(currentTime.getMinutes());
+    secondEl.textContent = zeropad(currentTime.getSeconds());
+}
+
+// Time interval: Updates hours, minutes and seconds with one second between each call. 
 setInterval(()=> {
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+    // Calls updateTime function
+    updateTime();    
 }, 1000);
 
-console.log("Timer started");
+// Sets initial time
+updateTime();
 
-
+// Returns a string with current time
+// currentTime.toLocaleTimeString()
