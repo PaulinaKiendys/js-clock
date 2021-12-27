@@ -94,3 +94,49 @@ updateTime();
 
 // Returns a string with current time
 // currentTime.toLocaleTimeString()
+
+/**
+ * Steg 1: Användaren anger minuter/sekunder timer:n ska vara på
+ * 
+ * Steg 2: När användaren klickar på "Starta timer" så omvandlar du detta till millisekunder (minuter * 60 * 1000 + sekunder * 1000)
+ * 
+ * Steg 3: Därefter ta ut tidpunkt i epoch-millisekunder (tid sedan 1 Januari 1970 UTC) som timern startade med const starttime = Date.now()
+ * 
+ * Steg 4: Ta de framräknade millisekunder från steg 2 (om du sparat dem i t.ex. duration) och skapa en "end-time" genom att lägga till de till starttiden const endtime = starttime + duration
+ * 
+ * Steg 5: Sätt upp en interval-timer som kör var 100:e millisekund och där kolla om Date.now() > endtime, i så fall kör clearInterval(timerId) och visa nått roligt meddelande eller spela en ljudeffekt
+ * 
+ * Steg 6: Du kan också i steget ovan passa på att uppdatera DOM med en nedräkning till sluttiden (endtime - Date.now() och dela det på 1000 för att få antal sekunder kvar till sluttiden). Om du vill visa det i minuter också så kan du använda modulus-operatorn % och dela på 60.
+ * */
+
+// Targets timer elements
+const timerEl = document.querySelector("#timer");
+const timerBtn = document.querySelector(".start-button");
+
+timerBtn.addEventListener('click', () => {
+    // Converts duration of timer (1 minute) to milliseconds
+    const duration = 1 * 60 * 1000;
+    // Gets current time in epoch-milliseconds
+    const starttime = Date.now();
+    const endtime = starttime + duration;
+
+    // Updates timer every 100 milliseconds
+    const timerId = setInterval(() => {
+
+        // Gets total number of seconds left to end of timer
+        const secondsLeft = Math.floor((endtime - Date.now()) / 1000);
+        // Gets number of minutes left to end of timer
+        const minutesLeft = Math.floor((secondsLeft / 60) % 60);
+
+        // Updates DOM with minutes and seconds left
+        timerEl.innerHTML = `${minutesLeft}:${secondsLeft}`;
+
+        // Checks if time is up
+        if (Date.now() > endtime) {
+            // Stops timer
+            clearInterval(timerId);
+            // Displays message
+            alert("Time's up!⌛");
+        }
+    }, 100);
+});
